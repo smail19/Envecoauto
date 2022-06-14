@@ -8,10 +8,12 @@ using API.Extensions;
 using API.RequestHelpers;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Metadata;
 
 namespace API.Controllers
 {
-   
+
     public class ProductsController : BaseApiController
     {
         private readonly StoreContext _context;
@@ -21,14 +23,15 @@ namespace API.Controllers
 
         }
         [HttpGet]
-        public async Task<ActionResult<PagedList<Product>>> GetProducts([FromQuery]ProductParams productParams){
+        public async Task<ActionResult<PagedList<Product>>> GetProducts([FromQuery] ProductParams productParams)
+        {
             var query = _context.Products
                 .Sort(productParams.OrderBy)
                 .Search(productParams.SearchTerm)
                 .Filter(productParams.Brands, productParams.Types)
                 .AsQueryable();
 
-            var products = await PagedList<Product>.ToPagedList(query, 
+            var products = await PagedList<Product>.ToPagedList(query,
                 productParams.PageNumber, productParams.PageSize);
 
             Response.AddPaginationHeader(products.MetaData);
@@ -45,13 +48,30 @@ namespace API.Controllers
 
             return product;
         }
-         [HttpGet("filters")]
+        [HttpGet("filters")]
         public async Task<IActionResult> GetFilters()
         {
             var brands = await _context.Products.Select(p => p.Brand).Distinct().ToListAsync();
             var types = await _context.Products.Select(p => p.Type).Distinct().ToListAsync();
 
-            return Ok(new {brands, types});
+            return Ok(new { brands, types });
         }
+
+        [HttpDelete]
+        public async Task<ActionResult> DeleteProducts()
+        {
+
+            foreach (var item in _context.Products)
+             {
+                _context.Products.Remove(item);
+             }
+            var result = await _context.SaveChangesAsync() > 0;
+
+            if (result) return Ok();
+
+            return BadRequest(new ProblemDetails { Title = "Problem removing item from the basket" });
+        }
+        
+
     }
 }

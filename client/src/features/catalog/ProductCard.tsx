@@ -10,10 +10,10 @@ import {
   Typography,
 } from "@mui/material";
 import { Link } from "react-router-dom";
-import { Product } from "../../app/models/Product";
+import { Product } from "../../app/models/product";
 import { useAppDispatch, useAppSelector } from "../../app/store/configureStore";
 import { currencyFormat } from "../../app/util/util";
-import { addBasketItemAsync } from "../basket/BasketSlice";
+import { addBasketItemAsync } from "../basket/basketSlice";
 
 interface Props {
   product: Product;
@@ -37,11 +37,12 @@ export default function ProductCard({ product }: Props) {
         }}
       />
       <CardMedia
-        sx={{
-          height: 140,
+        style={{
+          height: 180,
           backgroundSize: "contain",
-          bgcolor: "primary.light",
+          backgroundColor: "#CDE5D7", //primary.light
         }}
+        component="img"
         image={product.pictureUrl}
         title={product.name}
       />

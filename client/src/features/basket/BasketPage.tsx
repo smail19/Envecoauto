@@ -15,7 +15,7 @@ import {
 import { Box } from "@mui/system";
 import { Link } from "react-router-dom";
 import { useAppDispatch, useAppSelector } from "../../app/store/configureStore";
-import { removeBasketItemAsync, addBasketItemAsync } from "./BasketSlice";
+import { removeBasketItemAsync, addBasketItemAsync } from "./basketSlice";
 import BasketSummary from "./BasketSummary";
 
 export default function BasketPage() {

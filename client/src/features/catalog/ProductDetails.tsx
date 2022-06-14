@@ -18,7 +18,7 @@ import { useAppDispatch, useAppSelector } from "../../app/store/configureStore";
 import {
   addBasketItemAsync,
   removeBasketItemAsync,
-} from "../basket/BasketSlice";
+} from "../basket/basketSlice";
 import { fetchProductAsync, productSelectors } from "./catalogSlice";
 
 export default function ProductDetails() {

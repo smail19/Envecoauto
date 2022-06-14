@@ -1,7 +1,7 @@
 import { useState, useEffect } from "react";
 import ProductList from "./ProductList";
 import { Grid, Paper } from "@mui/material";
-import AppPagination from "../../app/Components/AppPaginaion";
+import AppPagination from "../../app/Components/AppPagination";
 import CheckboxButtons from "../../app/Components/CheckBoxButtons";
 import RadioButtonGroup from "../../app/Components/RadioButtonGroup";
 import ProductSearch from "./ProductSearch";
